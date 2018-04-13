@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  let dataArray = [];
+
+  //Get data from endpoint
+  fetch(endpoint)
+    .then(function(response) {
+        if(response.ok) {
+          return response.json();
+        }
+        throw new Error('Request Fail!');
+      }, function(networkError) {
+        console.log(networkError);
+    })
+    .then(function (jsonResponse) {
+        dataArray = jsonResponse;
+    });
+
+
+  function dataMatch(_string, _dataArray) {
+    //'i' case-insenstive mode,'g' global mode
+    let regexp = new RegExp(_string, 'ig');
+    let newArray = _dataArray.filter(function(_data) {
+      return _data.city.match(regexp) || _data.state.match(regexp);
+    });
+    return newArray;
+  }
+
+  function display() {
+    let keyword = this.value;
+    let match = dataMatch(keyword, dataArray);
+    //map the array and join them to a string
+    let html = match.map(function(place) {
+      let regexp = new RegExp(keyword, 'ig');
+      //turn the keyword to highlight
+      let cityName = '<span class="hl">'+keyword+'</span>';
+      let stateName = '<span class="hl">'+keyword+'</span>';
+      let cityName_html = place.city.replace(regexp, cityName);
+      let stateName_html = place.state.replace(regexp, stateName);
+      return '<li><span class="name">'+cityName_html+', '+stateName_html+'</span>'+'<span class="population">'+place.population+'</span></li>';
+    }).join('');
+    //change the HTML
+    suggestions.innerHTML = html;
+  }
+
+  let serch = document.querySelector('.search');
+  let suggestions = document.querySelector('.suggestions');
+  serch.addEventListener('change', display);
+  serch.addEventListener('keyup', display);
+
+
+</script>
+  </body>
+</html>
