@@ -42,6 +42,24 @@
     return newArray;
   }
 
+  function addComma(population) {
+  	let total =  Math.floor((population.length-1)/3);
+  	let newpopulation = [];
+  	for(let i = 1, j = 1; i <= population.length+total; i++) {
+  		if (i%4 != 0) {
+  			newpopulation[population.length+total-i] = population[population.length-j];
+  			j++;
+  		} else {
+  			newpopulation[population.length+total-i] = ',';
+  		}
+  	}
+  	let newpopulationstring = '';
+  	for(let i = 0; i < newpopulation.length; i++) {
+  		newpopulationstring += newpopulation[i];
+  	}
+  	return newpopulationstring;
+  }
+
   function display() {
     let keyword = this.value;
     let match = dataMatch(keyword, dataArray);
@@ -53,7 +71,8 @@
       let stateName = '<span class="hl">'+keyword+'</span>';
       let cityName_html = place.city.replace(regexp, cityName);
       let stateName_html = place.state.replace(regexp, stateName);
-      return '<li><span class="name">'+cityName_html+', '+stateName_html+'</span>'+'<span class="population">'+place.population+'</span></li>';
+      let population_html = addComma(place.population);
+      return '<li><span class="name">'+cityName_html+', '+stateName_html+'</span>'+'<span class="population">'+population_html+'</span></li>';
     }).join('');
     //change the HTML
     suggestions.innerHTML = html;
