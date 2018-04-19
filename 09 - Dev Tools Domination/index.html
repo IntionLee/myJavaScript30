@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log('Regular');
+
+    // Interpolated
+    //console.log('str1 %s%s', 'str2', 'str3'...etc)
+    console.log('The name of my dog is %s and %s', 'DouDou', 'DingDing');
+
+    // Styled
+    //console.log('%cstr1%cstr2', 'css statement','css statement'...etc);
+    console.log('%cDouDou%cDingDing', 'color: blue;','color:red;');
+
+    // warning!
+    //console.warn('str');
+    console.warn('This is a warning!');
+
+    // Error
+    //console.error('str');
+    console.error('This is an error!');
+
+    // Info
+    //console.info('str');
+    console.info('This is an information!');
+
+    // Testing
+    //console.assert(statement, 'str');
+    let a = 1, b = 2;
+    console.assert(a === b, 'a != b');
+
+    // clearing
+    console.clear();
+
+    // Viewing DOM Elements
+    //console.dir() will print all the method of the DOM element
+    let p = document.querySelector('p');
+    console.log(p);
+    console.dir(p);
+
+    // Grouping together
+    //console.group('grp');	//group start
+    console.groupCollapsed('grp');  //group start and collapse the group
+    console.log('grp 1');
+    console.log('grp 2');
+    console.log('grp 3');
+    console.log('grp 4');
+    console.groupEnd('grp');	//group end
+
+    // counting
+    let num = 1;
+    console.count('a');
+    console.count('a');
+    console.count(p);
+    console.count('a');
+    console.count(p);
+    console.count(num);
+
+
+    // timing
+    console.time('count');	//start
+    for(let i = 0; i < 10000; i++) {
+
+    }
+    console.timeEnd('count');	//end
+
+  </script>
+</body>
+</html>
