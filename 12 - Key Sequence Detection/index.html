@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+	const password = 'wesbos';
+	let press = [];
+
+	function handlePress(e) {
+		if (press.length < 5) {
+			press.push(e.key);
+		} else  if (press.length === 5){
+			press.push(e.key);
+			verifyPW(press.join(''));
+		} else {
+			press.shift();
+			press.push(e.key);
+			verifyPW(press.join(''));
+		}
+	}
+
+	function verifyPW(pw) {
+		if(pw === password) {
+			cornify_add();
+		}
+	}
+
+	document.addEventListener('keydown', handlePress);
+</script>
+</body>
+</html>
