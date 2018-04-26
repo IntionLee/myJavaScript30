@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // start with strings, numbers and booleans
+    /*string, numbers, booleans等數據類型屬於基本類型，進行賦值操作時會在變量對象上創建一個新值，
+    然後再把新值複製到為新變量分配的位置，這兩個變量可以參與任何操作而不互相影響*/
+
+    // Let's say we have an array
+    /*array類型屬於引用類型，進行賦值操作時產生的副本實際上是一個指向原對象儲存位置的指針，
+    因此若改變其一之值，另一個變量同樣會受到影響*/
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // and we want to make a copy of it.
+    // You might think we can just do something like this:
+    let copy_players = players;
+
+    // however what happens when we update that array?
+    // now here is the problem!
+    // oh no - we have edited the original array too!
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+    // So, how do we fix this? We take a copy instead!
+    // one way
+    /* slice(start, end);    //基於給定的參數為當前數組創立一個副本 */
+    let copy_players2 = players.slice();
+
+    // or create a new array and concat the old one in
+    /* concat();    //基於當前數組的所有項創立一個新數組 */
+    let copy_players3 = players.concat();
+
+    // or use the new ES6 Spread
+    /* ...array    //three dots, 展開運算符，淺拷貝*/
+    let copy_players4 = [...players];
+
+    // now when we update it, the original one isn't changed
+
+    // The same thing goes for objects, let's say we have a person object
+    // with Objects
+    /*object類型亦屬於引用類型*/
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+    // and think we make a copy:
+     let copy_person = person;
+
+    // how do we take a copy instead?
+    /* Object.assign(target, sources);     //用以複製object屬性到另一個目標object, return 值為目標物件*/
+    const copy_person2 = Object.assign({}, person, { number: 10, age: 5});
+
+    // We will hopefully soon see the object ...spread
+    /*目前, 展開運算符只能運用在array*/
+
+    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    /* JSON.parse(text);    //解析JSON字符串
+       JSON.stringify();    //將JavaScript值轉為JSON字符串*/
+    const wes = {
+      name: 'Wes',
+      age: 100,
+      social: {
+        twitter: '@wesbos',
+        facebook: 'wesbos.developer'
+      }
+    };
+
+    const dev2 = JSON.parse(JSON.stringify(wes));
+
+  </script>
+
+</body>
+</html>
