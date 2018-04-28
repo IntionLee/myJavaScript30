@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>🔥WOAH!</h1>
+  </div>
+
+  <style>
+  html {
+    color:black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:black;
+  }
+
+  h1 {
+    text-shadow: 10px 10px 0 rgba(0,0,0,1);
+    font-size: 100px;
+  }
+  </style>
+
+<script>
+    const hero = document.querySelector('.hero');
+    const title = document.querySelector('.hero h1')
+    const distance = 450;
+
+    function shadow(e) {
+        /*解構賦值*/
+        let {offsetX: x, offsetY: y} = e;
+        let {offsetWidth: width, offsetHeight: height} = this;
+
+        if (this !== e.target) {
+            x = x+e.target.offsetLeft;
+            y = y+e.target.offsetTop;
+        }
+
+        let displacementX = ((x-(width/2))/width)*distance;
+        let displacementY = ((y-(height/2))/height)*distance;
+
+        title.style.textShadow = `${displacementX}px ${displacementY}px 0 rgba(255, 128, 128, 1),
+            ${displacementX*-1}px ${displacementY}px 0 rgba(128, 255, 128, 1),
+            ${displacementX}px ${displacementY*-1}px 0 rgba(128, 128, 255, 1),
+            ${displacementY}px ${displacementX}px 0 rgba(128, 255, 255, 1),
+            ${displacementY*-1}px ${displacementX}px 0 rgba(255, 128, 255, 1),
+            ${displacementY}px ${displacementX*-1}px 0 rgba(255, 255, 128, 1)
+        `;
+    }
+
+    hero.addEventListener('mousemove', shadow);
+    console.log(hero);
+</script>
+</body>
+</html>
